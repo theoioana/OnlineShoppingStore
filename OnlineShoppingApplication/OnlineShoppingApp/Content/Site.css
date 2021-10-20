@@ -1,0 +1,77 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Bootstrap Ovverrides */
+
+.navbar-inverse {
+    background-color: darkcyan;
+}
+
+.navbar-inverse .navbar-brand {
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: black;
+}
+
+.navbar-nav > li > a {
+    font-size: 16px;
+}
+
+.nav > li {
+    position: relative;
+    display: inline-flex;
+}
+
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+    border-top-color: black;
+    border-bottom-color: black;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    color: black;
+    text-decoration: underline;
+    background-color: darkcyan;
+}
+
+.category-list {
+    list-style-type: none;
+    padding: 1px;
+}
+
+.category-list > a {
+    font-size: 17px;
+    color: indianred;
+}
+
+.table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
+    padding: 8px;
+    line-height: 1.428571429;
+    vertical-align: middle;
+    text-align: center;
+}

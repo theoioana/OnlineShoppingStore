@@ -1,0 +1,93 @@
+﻿@using OnlineShoppingApp.Models;
+
+@{
+    ViewBag.Title = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="well page-header">Shopping Cart</h2>
+
+@if ((List<Cart>)Session["Cart"] == null)
+{
+    <p>Cart is empty.</p>
+}
+else
+{
+    <p>Num of items:
+        @{ 
+            List<Cart> list = (List<Cart>)Session["Cart"];
+            var listLength = list.Count();
+        }
+        @listLength
+    @{ 
+        ViewBag.ListL = listLength;
+    }
+    </p>
+
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cart in (List<Cart>)Session["Cart"])
+            {
+                <tr>
+                    <td>
+                        <img src="@cart.Item.PictureUrl" style="overflow: hidden; position: relative; width:50px; height:50px;" />
+                    </td>
+                    <td>@cart.Item.Name</td>
+                    <td>
+                        @Html.ActionLink("+ ", "AddOne", "ShoppingCart", new { id = cart.Item.Id }, null)
+                        @cart.Quantity
+                        @Html.ActionLink(" -", "RemoveOne", "ShoppingCart", new { id = cart.Item.Id}, null)
+                    </td>
+                    <td>$@cart.Item.Price</td>
+                    <td>$@(cart.Item.Price * cart.Quantity)</td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", "ShoppingCart",
+                   new { id = cart.Item.Id }, new { onclick = "return confirm('Are you sure you want to delete this item?');" })
+                </td>
+            </tr>
+            }
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="2">
+                    Total:
+                    @{
+                        List<Cart> temp = (List<Cart>)Session["Cart"];
+                        var total = temp.Sum(x => x.Quantity * x.Item.Price);
+                    }
+                    <b>$@total</b>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<span class="continue glyphicon glyphicon-arrow-left"></span>
+@Html.ActionLink("Continue Shopping", "Index", "Items")
+
+<text class="proceed"><span class="glyphicon glyphicon-shopping-cart"></span>@Html.ActionLink("Checkout", "Create", "Orders")</text>
+
+
+@section Scripts{
+    <style>
+        .proceed{
+            float: right;
+            padding-right: 30px;
+        }
+
+        .continue{
+            float: left;
+            padding-left: 30px;
+        }
+    </style>
+    }
+

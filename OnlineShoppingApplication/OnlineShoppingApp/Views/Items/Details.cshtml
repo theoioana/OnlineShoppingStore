@@ -1,0 +1,56 @@
+﻿@model OnlineShoppingApp.Models.Item
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="well page-header"><b>@Model.Name</b> - $@Model.Price</h2>
+
+<div class="col-md-4">
+    <img src="@Model.PictureUrl" style="overflow: hidden; position: relative; width:300px; height:300px;" />
+</div>
+
+<div class="col-md-8">
+    <p><b>Description:</b><br />@Model.Description</p>
+    <p><b>Price:</b> $@Model.Price</p> 
+    <p><b>Seller:</b> @Model.User.Name - @Model.User.UserName</p>
+    <p>
+        <b>Payment: </b>
+        <img src="~/Content/Images/Payment/logoPayPal_51x14.png" style="overflow: hidden; position: relative; width:30px; height:15px;" />
+        <img src="~/Content/Images/Payment/logo1.png" style="overflow: hidden; position: relative; width:30px; height:15px;" />
+        <img src="~/Content/Images/Payment/logo2.jpg" style="overflow: hidden; position: relative; width:30px; height:15px;" />
+    </p>
+    <br />
+    <span class="btn btn-default">@Html.ActionLink("Add to cart ", "OrderNow", "ShoppingCart", new { id = Model.Id }, null)<span class="glyphicon glyphicon-shopping-cart"></span></span>
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <span class="js-add-wishlist btn btn-default" data-item-id="@Model.Id">Add to wishlist <span class="glyphicon glyphicon-heart-empty"></span></span>
+        }
+    }
+
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".js-add-wishlist").click(function (e) {
+                var button = $(e.target);
+                $.ajax(
+                    {
+                        url: "/api/Wishlist/" + button.attr('data-item-id'),
+                        method: "GET",
+                        success: function () {
+                            button.html("Added to wishlist")
+                            toastr.success("Item successfully added to your wishlist.");
+                        },
+
+                    }
+                );
+            })
+        });
+    </script>
+}
+
